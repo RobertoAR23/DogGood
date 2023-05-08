@@ -1,0 +1,36 @@
+.landing-page {
+  background-image: url('../../utils/LP.avif');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 4rem;
+  color: #000000dc;
+  text-align: center;
+  margin-top: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background-color: transparent; /* cambia el fondo del botón a transparente */
+  color: #4d474700;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #3736361a;
+  color: #3e2d2d00;
+}

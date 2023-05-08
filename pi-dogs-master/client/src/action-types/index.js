@@ -1,0 +1,15 @@
+export const GET_ALL_DOGS = "GET_ALL_DOGS";
+export const GET_DESCRIPTION = "GET_DESCRIPTION";
+export const GET_DOGS_FOR_NAME = "GET_DOGS_FOR_NAME";
+export const GET_ALL_TEMPERAMENT = "GET_ALL_TEMPERAMENT"; 
+export const FILTER_TEMPERAMENT = "FILTER_TEMPERAMENT"; 
+export const ORDER_BY_NAME = "ORDER_BY_NAME"; 
+export const ORDER_BY_WEIGHT = "ORDER_BY_WEIGHT"; 
+export const FILTER_CREATED = "FILTER_CREATED"; 
+export const GET_CLEAN = "GET_CLEAN"; 
+export const POST_DOG = "POST_DOG" ; 
+export const SET_LOADING = "SET_LOADING" ; 
+export const ERROR = "ERROR"; 
+export const DELETE_DOG = "DELETE_DOG"; 
+export const ADD_FAV = "ADD_FAV"; 
+export const DELETE_FAV = "DELETE_FAV"; 

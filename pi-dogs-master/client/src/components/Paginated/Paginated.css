@@ -1,0 +1,35 @@
+.paginado {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 16px;
+
+}
+
+.paginado a {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 0 5px;
+  background-color: #0cdd0c;
+  border: 4px solid #a0ff07;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* MOUSE ENCIMA */
+.paginado a:hover {
+  background-color: #0bf703;
+}
+
+/* PAGINA ACTUAL */
+.paginado a.selected {
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  background-color: #067204dd;
+  cursor: default;
+}

@@ -1,0 +1,48 @@
+.Create {
+    background-image: url('../../utils/home\ 5.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h2 {
+    font-size: 3rem;
+    color: #2d4467c8;
+    /* o cualquier otro tono oscuro que prefieras */
+    text-shadow: 2px 2px 0 #00f2ff, -2px -2px 0 #29c34de4, 2px -2px 0 #5b3808d1, -2px 2px 0 #034b05c0;
+}
+
+.button-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.button-con {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+button {
+    height: 50px;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    background-color: #0ce0e7fb;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #2790e0d7;
+    color: #fff;
+}
