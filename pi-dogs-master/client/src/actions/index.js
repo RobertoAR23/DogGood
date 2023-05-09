@@ -75,7 +75,7 @@ export const getDogsForName = (name) => {
             payload: name
         }
     } catch (error) {
-        alert("Error al obtener la descripcion")
+        alert("Error al obtener los perros por nombre")
         
     }
 }
@@ -135,12 +135,6 @@ export function getClean () {
 
 // Filers
 
-export const filterTemperament = (temperament) => {
-    return {
-        type: FILTER_TEMPERAMENT,
-        payload: temperament
-    }
-}
 
 export function orderByName(payload){
     return {
@@ -156,6 +150,12 @@ export function orderByWeight(payload){
     }
 }
 
+export const filterTemperament = (temperament) => {
+    return {
+        type: FILTER_TEMPERAMENT,
+        payload: temperament
+    }
+}
 export function filterCreated(payload){ 
     return {    
         type: FILTER_CREATED,

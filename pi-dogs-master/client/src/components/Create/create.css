@@ -30,19 +30,18 @@ h2 {
 }
 
 button {
-    height: 50px;
-    padding: 1rem 2rem;
-    font-size: 1.5rem;
-    background-color: #0ce0e7fb;
-    color: #333;
+    background-color: #0cddd6aa;
+    color: white;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 2rem;
-    transition: all 0.3s ease-in-out;
+    font-size: 16px;
+    border: 5px solid #068d86b3;
+
 }
 
 button:hover {
-    background-color: #2790e0d7;
+    background-color: #159de7e2;
     color: #fff;
 }

@@ -18,6 +18,19 @@
   margin: 0; /* Quitar el margen por defecto del encabezado */
 }
 
+button#top {
+  background-color: #0cdd0c;
+  color: white;
+  padding: 10px 20px;
+  margin-right: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  border: 5px solid #a0ff07;
+
+}
+
 card-Home {
   font-size: 3rem;
   color: #2b787c80;
@@ -42,27 +55,19 @@ h3 {
   box-sizing: border-box;
 }
 
-#back-btn {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-}
-
-#create-btn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
-
 select {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 5px solid #a0ff07;
   font-size: 1rem;
-  color: #333;
+  color: #ffffff;
   background-color: #0cdd0c;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   margin-right: 10px;
-  margin-top: 16px;
+  margin-top: 5px;
+}
+select:checked::selection {
+  background-color: rgb(170, 0, 255);
+  color: white;
 }

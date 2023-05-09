@@ -31,15 +31,14 @@ const initialState = {
 
 // Reducer
 const rootReducer = (state = initialState, action) => {
-    let pj = []; // Array auxiliar para guardar los perros filtrados
+    let df = []; // Array auxiliar para guardar los perros filtrados
     switch (action.type) {
-        // Obtener todos los dogs tanto de la api como la base de datos
         case GET_ALL_DOGS:
-            pj = action.payload; // Obtengo el array de dogs
+            df = action.payload; // Obtengo el array de dogs
             return {
                 ...state, // Obtengo el estado actual
                 allDogs: action.payload, // Obtengo el array de dogs
-                dogsFilter: pj,  // Guardo el array de dogs filtrados
+                dogsFilter: df,  // Guardo el array de dogs filtrados
                 loading: false,
             }
 
@@ -77,62 +76,50 @@ const rootReducer = (state = initialState, action) => {
 
         case GET_DOGS_FOR_NAME:
             // filtrar los perros por nombre
-            pj = state.payload === ""// POSIBLE ERROR, DEBE SER ACTION Y NO STATE (VERIFICAR)
+            df = state.payload === ""// POSIBLE ERROR, DEBE SER ACTION Y NO STATE (VERIFICAR)
                 ? state.allDogs
                 : state.allDogs.filter(dog => dog.name.toLowerCase().includes(action.payload.toLowerCase())) // Obtengo el array de dogs filtrados
             return {
                 ...state,
-                dogsFilter: pj,
+                dogsFilter: df,
                 loading: false,
             }
 
-        case FILTER_TEMPERAMENT:
-            pj = action.payload === "all"
-            ? state.allDogs
-            : state.allDogs.filter(dog => {
-                if (!dog.temperament) return undefined; // si el perro no tiene temperamento no lo muestro
-                // console.log("PROBANDO TEMPERAMENTO", dog.temperament.includes())
-                return dog.temperament.includes(action.payload) // si el perro tiene temperamento y el temperamento es igual al que selecciono lo muestro
-            })
-                return {
-                ...state,
-                dogsFilter: pj
-            }
 
-            case ORDER_BY_NAME:
-                // ordenar los perros por nombre
-                pj= (state.allDogs + state.allDogs.filter(dog => dog.createdInBd))
-                if (action.payload === "asc") {
-                    pj = state.dogsFilter.sort((a, b) => {
-                        const nameA = a.name.toLowerCase(); // convertir a.minúsculas para ignorar mayúsculas
-                        const nameB = b.name.toLowerCase();
-                        if (nameA < nameB) return -1; // si el nombre de a es menor que el de b, a va antes que b
-                        if (nameA > nameB) return 1; // si el nombre de a es mayor que el de b, a va después que b
-                        return 0;
-                    })
-                } else {
-                    pj = state.dogsFilter.sort((a, b) => {
-                        const nameA = a.name.toLowerCase(); // convertir a.minúsculas para ignorar mayúsculas
-                        const nameB = b.name.toLowerCase();
-                        if (nameA > nameB) return -1; // si el nombre de a es mayor que el de b, a va antes que b
-                        if (nameA < nameB) return 1; // si el nombre de a es menor que el de b, a va después que b
-                        return 0;
-                    })
-                }
-                return {
-                    ...state,
-                    dogsFilter: pj
-                }
+        case ORDER_BY_NAME:
+            // ordenar los perros por nombre
+            df = (state.allDogs + state.allDogs.filter(dog => dog.createdInBd))
+            if (action.payload === "asc") {
+                df = state.dogsFilter.sort((a, b) => {
+                    const nameA = a.name.toLowerCase(); // convertir a.minúsculas para ignorar mayúsculas
+                    const nameB = b.name.toLowerCase();
+                    if (nameA < nameB) return -1; // si el nombre de a es menor que el de b, a va antes que b
+                    if (nameA > nameB) return 1; // si el nombre de a es mayor que el de b, a va después que b
+                    return 0;
+                })
+            } else {
+                df = state.dogsFilter.sort((a, b) => {
+                    const nameA = a.name.toLowerCase(); // convertir a.minúsculas para ignorar mayúsculas
+                    const nameB = b.name.toLowerCase();
+                    if (nameA > nameB) return -1; // si el nombre de a es mayor que el de b, a va antes que b
+                    if (nameA < nameB) return 1; // si el nombre de a es menor que el de b, a va después que b
+                    return 0;
+                })
+            }
+            return {
+                ...state,
+                dogsFilter: df
+            }
 
         case ORDER_BY_WEIGHT:
             if (action.payload === "min") {
-                pj = state.dogsFilter.sort((a, b) => {
+                df = state.dogsFilter.sort((a, b) => {
                     if (a.weightMin < b.weightMin) return -1; // si el peso de a es menor que el de b, a va antes que b
                     if (a.weightMin > b.weightMin) return 1; // si el peso de a es mayor que el de b, a va despues que b
                     return 0;
                 })
             } else {
-                pj = state.dogsFilter.sort((a, b) => {
+                df = state.dogsFilter.sort((a, b) => {
                     if (a.weightMin > b.weightMin) return -1; // si el peso de a es mayor que el de b, a va antes que b
                     if (a.weightMin < b.weightMin) return 1; // si el peso de a es menor que el de b, a va despues que b
                     return 0;
@@ -141,21 +128,33 @@ const rootReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                dogsFilter: pj
+                dogsFilter: df
+            }
+        case FILTER_TEMPERAMENT:
+            df = action.payload === "all"
+                ? state.allDogs
+                : state.allDogs.filter(dog => {
+                    if (!dog.temperament) return undefined; // si el perro no tiene temperamento no lo muestro
+                    // console.log("PROBANDO TEMPERAMENTO", dog.temperament.includes())
+                    return dog.temperament.includes(action.payload) // si el perro tiene temperamento y el temperamento es igual al que selecciono lo muestro
+                })
+            return {
+                ...state,
+                dogsFilter: df
             }
 
         case FILTER_CREATED:
             if (action.payload === "All") {
-                pj = state.allDogs; // si el filtro es all, muestro todos los perros
+                df = state.allDogs; // si el filtro es all, muestro todos los perros
             } else if (action.payload === "Exist") {
-                pj = state.allDogs.filter(dog => !dog.createdInBd);
+                df = state.allDogs.filter(dog => !dog.createdInBd);
             } else {
-                pj = state.allDogs.filter(dog => dog.createdInBd);
+                df = state.allDogs.filter(dog => dog.createdInBd);
             }
-            console.log("PROBANDO REDUCER", pj)
+            console.log("PROBANDO REDUCER", df)
             return {
                 ...state,
-                dogsFilter: pj
+                dogsFilter: df
             };
 
         case GET_CLEAN:
