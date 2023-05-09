@@ -143,6 +143,7 @@ export default function Home() {
                             id={dog.id}
                             name={dog.name}
                             image={dog.image}
+                            // image={dog.image ? dog.image : dog.image.url}
                             temperament={dog.temperament}
                             weightMin={dog.weightMin}
                             weightMax={dog.weightMax}
