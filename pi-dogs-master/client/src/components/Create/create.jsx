@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { postDog, getAllTemperament, getAllDogs } from '../../actions/index';
 import { useDispatch, useSelector } from 'react-redux';
-import './create.css'; // Archivo CSS que hemos creado
+import './create.css';
+import validate from './validate'
+
 
 export default function Create() {
     const dispatch = useDispatch();
+    const history = useHistory();
+    const [error, setError] = useState({});
     let { temperamen } = useSelector((state) => state); // obtengo el estado actual del store
+
     temperamen = [...new Set(temperamen)];
     temperamen.sort();
     // console.log("CREATEEE ", temperamen)
@@ -22,22 +27,94 @@ export default function Create() {
         life_spanMax: "",
         temperament: [],
     })
-
+    // -------------------------------------------HANDLES-------------------------------------------
     // Función que se ejecuta cada vez que cambia el valor de un input
     function handleChange(e) {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-        console.log(input)
-    }
 
+        if (e.target.name === "weightMin") {
+            setInput({
+                ...input,
+                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
+            });
+        } else if (e.target.name === "weightMax") {
+            setInput({
+                ...input,
+                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
+            })
+        }
+        else if (e.target.name === "heightMin") {
+            setInput({
+                ...input,
+                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
+            });
+        }
+        else if (e.target.name === "heightMax") {
+            setInput({
+                ...input,
+                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
+            })
+        }
+        else if (e.target.name === "life_spanMin") {
+            setInput({
+                ...input,
+                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
+            });
+        }
+        else if (e.target.name === "life_spanMax") {
+            setInput({
+                ...input,
+                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
+            })
+        }
+
+        else {
+            setError(
+                validate({
+                    ...input,
+                    [e.target.name]: e.target.value,
+                })
+            );
+            setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+            });
+
+        }
+        console.log(input);
+    }
+    // funcion para seleccionar temperamentos
     function handleSelect(e) {
         setInput({
             ...input,
             temperament: [...input.temperament, e.target.value]
         })
     }
+    // funcion para borrar temperament seleccionados
+    function handleDelete(index) {
+        const newTemperament = [...input.temperament];
+        newTemperament.splice(index, 1);
+        setInput({ ...input, temperament: newTemperament });
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(input)
+        dispatch(postDog(input));
+        alert("Dog created successfully");
+        setInput({
+            name: "",
+            weightMin: "",
+            weightMax: "",
+            heightMin: "",
+            heightMax: "",
+            image: "",
+            life_spanMin: "",
+            life_spanMax: "",
+            temperament: [],
+        })
+        history.push("/Home");
+    }
+
 
     useEffect(() => {
         dispatch(getAllTemperament());
@@ -51,19 +128,19 @@ export default function Create() {
                 <Link to="/Home">
                     <button id="back-btn">Home</button>
                 </Link>
-                <button type='submit'>Done</button>
             </div>
             {/* ------------------------------------------------------------------------------------ */}
             {/* FORMULARIO */}
-            <form className="form-container">
+            <form onSubmit={(e) => handleSubmit(e)} className="form-container">
                 <div className='formulario'>
+                <button type='submit'>Done</button>
                     {/* NOMBRE DEL PERRO */}
                     <label>Name:</label>
                     <input
                         type="text"
                         value={input.name}
                         name="name"
-                        autocomplete="off"
+                        autoComplete="off"
                         onChange={handleChange}
                     />
                     {/* PESOs DEL PERRO */}
@@ -102,7 +179,7 @@ export default function Create() {
                         type="text"
                         value={input.image}
                         name="image"
-                        autocomplete="off"
+                        autoComplete="off"
                         onChange={handleChange}
                     />
                     {/* AÑOS DE VIDA DEL PERRO */}
@@ -122,14 +199,25 @@ export default function Create() {
                     />
                     {/* TEMPERAMENTOS DEL PERRO */}
                     <select onChange={(e) => handleSelect(e)}>
-                        {temperamen && temperamen.length > 0 && temperamen.map((temp) => (
-                            <option value={temp}>
+                        {temperamen && temperamen.length > 0 && temperamen.map((temp, index) => (
+                            <option key={index} value={temp}>
                                 {temp}
                             </option>
                         ))}
                     </select>
                     {/* Muestro los temperamentos seleccionados */}
-                    <ul><li>{input.temperament.map(el => el + " ,")}</li></ul>
+                    {input.temperament.length > 0 && (
+                        <ol>
+                            {input.temperament.map((el, index) => (
+                                <li key={index}>
+                                    {el}
+                                    <button type="button" onClick={() => handleDelete(index)}>Eliminar</button>
+                                    {index !== input.temperament.length - 1 && ", "}
+                                </li>
+                            ))}
+                        </ol>
+                    )}
+
                 </div>
             </form>
         </div>
