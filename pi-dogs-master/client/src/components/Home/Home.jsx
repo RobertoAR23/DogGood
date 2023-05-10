@@ -39,6 +39,12 @@ export default function Home() {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+// ====================================mostrar todos los perros====================================
+    function handleShowAllDogs() {
+        dispatch(getAllDogs()) // llama a la acción para obtener todos los perros
+        setCurrentPage(1) // establece la página actual en 1 para volver a la primera página
+      }
+
     // -------------------------------------ordenamiento alfabetico----------------------------------
 
     function handleSort(e) {
@@ -80,8 +86,6 @@ export default function Home() {
                 <div className="welcome">
                     <h1>Find your Dog!</h1>
                 </div>
-            <SearchBar />
-            </div>
             <div className="button-container">
                 <Link to="/">
                     <button id="top">Back</button>
@@ -92,6 +96,8 @@ export default function Home() {
             </div>
             {/* ----------------------FILTROS------------------- */}
             <div className="filter">
+            <SearchBar currentPage={currentPage} setCurrentPage={setCurrentPage} /> {/* pasa la página actual y la función para actualizarla */}            </div>
+            <button id="top" onClick={handleShowAllDogs}>Show all dogs</button> {/* botón para mostrar todos los perros */}
                 {/* ----------------------Orden Alfabetico --------------------*/}
                 <select onChange={(e) => handleSort(e)} defaultValue="ALP">
                     <option value="ALP" disabled>Alphabetical order</option>

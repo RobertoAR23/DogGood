@@ -30,63 +30,46 @@ export default function Create() {
     // -------------------------------------------HANDLES-------------------------------------------
     // Función que se ejecuta cada vez que cambia el valor de un input
     function handleChange(e) {
-
-        if (e.target.name === "weightMin") {
+        const limitProps = {
+            weightMin: 0,
+            weightMax: 0,
+            heightMin: 0,
+            heightMax: 0,
+            life_spanMin: 0,
+            life_spanMax: 0
+        };
+        // Obtenemos el nombre y el valor del elemento que desencadenó el evento de cambio
+        const { name, value } = e.target;
+        // Si el valor es menor a 0, asignamos una cadena vacía, de lo contrario, mantenemos el valor original
+        const inputValue = Number(value) < 0 ? "" : value;
+        // Verificamos si el nombre está presente en limitProps
+        if (limitProps.hasOwnProperty(name)) {
+            // Si el nombre está en limitProps, actualizamos el estado input con la propiedad correspondiente
             setInput({
                 ...input,
-                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
+                [name]: inputValue
             });
-        } else if (e.target.name === "weightMax") {
+        } else {
+            // Si el nombre no está en limitProps, realizamos las validaciones de error y actualizamos el estado input
+            setError(validate({
+                ...input,
+                [name]: value
+            }));
             setInput({
                 ...input,
-                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
-            })
-        }
-        else if (e.target.name === "heightMin") {
-            setInput({
-                ...input,
-                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
+                [name]: value
             });
-        }
-        else if (e.target.name === "heightMax") {
-            setInput({
-                ...input,
-                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
-            })
-        }
-        else if (e.target.name === "life_spanMin") {
-            setInput({
-                ...input,
-                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
-            });
-        }
-        else if (e.target.name === "life_spanMax") {
-            setInput({
-                ...input,
-                [e.target.name]: Number(e.target.value) < 0 ? "" : e.target.value,
-            })
         }
 
-        else {
-            setError(
-                validate({
-                    ...input,
-                    [e.target.name]: e.target.value,
-                })
-            );
-            setInput({
-                ...input,
-                [e.target.name]: e.target.value,
-            });
-
-        }
         console.log(input);
     }
+
+
     // funcion para seleccionar temperamentos
     function handleSelect(e) {
         setInput({
             ...input,
-            temperament: [...input.temperament, e.target.value]
+            temperament: [...new Set ([...input.temperament, e.target.value])]
         })
     }
     // funcion para borrar temperament seleccionados
@@ -98,27 +81,46 @@ export default function Create() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(input)
+        const errors = validate(input);
+      
+        if (Object.keys(errors).length > 0) {
+          let errorMessage = "Form incomplete. Please fill in all required fields:\n";
+      
+          for (let key in errors) {
+            errorMessage += `${errors[key]}\n`;
+          }
+      
+          alert(errorMessage);
+          return;
+        }
+      
+        console.log(input);
         dispatch(postDog(input));
         alert("Dog created successfully");
         setInput({
-            name: "",
-            weightMin: "",
-            weightMax: "",
-            heightMin: "",
-            heightMax: "",
-            image: "",
-            life_spanMin: "",
-            life_spanMax: "",
-            temperament: [],
-        })
+          name: "",
+          weightMin: "",
+          weightMax: "",
+          heightMin: "",
+          heightMax: "",
+          image: "",
+          life_spanMin: "",
+          life_spanMax: "",
+          temperament: [],
+        });
         history.push("/Home");
-    }
+      }
+      
+      
 
 
     useEffect(() => {
         dispatch(getAllTemperament());
     }, [dispatch]);
+
+    useEffect(() => {
+        setError(validate(input))
+    }, [input]);
 
     return (
         // BOTONES A HOME Y HECHO
@@ -133,7 +135,7 @@ export default function Create() {
             {/* FORMULARIO */}
             <form onSubmit={(e) => handleSubmit(e)} className="form-container">
                 <div className='formulario'>
-                <button type='submit'>Done</button>
+                    <button type='submit'>Done</button>
                     {/* NOMBRE DEL PERRO */}
                     <label>Name:</label>
                     <input
@@ -151,13 +153,14 @@ export default function Create() {
                         name="weightMin"
                         onChange={handleChange}
                     />
-                    <label>Weight max:</label>
+                    {error.weightMin && (<p className='danger'>{error.weightMin}</p>)}
                     <input
                         type="number"
                         value={input.weightMax}
                         name="weightMax"
                         onChange={handleChange}
                     />
+                    {error.weightMax && (<p className='danger'>{error.weightMax}</p>)}
                     {/* ALTURA DEL PERRO */}
                     <label>Height min:</label>
                     <input
@@ -166,6 +169,7 @@ export default function Create() {
                         name="heightMin"
                         onChange={handleChange}
                     />
+                    {error.heightMin && (<p className='danger'>{error.heightMin}</p>)}
                     <label>Height max:</label>
                     <input
                         type="number"
@@ -173,6 +177,7 @@ export default function Create() {
                         name="heightMax"
                         onChange={handleChange}
                     />
+                    {error.heightMax && (<p className='danger'>{error.heightMax}</p>)}
                     {/* IMAGEN DEL PERRO */}
                     <label>Image:</label>
                     <input
@@ -190,6 +195,7 @@ export default function Create() {
                         name="life_spanMin"
                         onChange={handleChange}
                     />
+                    {error.life_spanMin && (<p className='danger'>{error.life_spanMin}</p>)}
                     <label>Life span max:</label>
                     <input
                         type="number"
@@ -197,6 +203,7 @@ export default function Create() {
                         name="life_spanMax"
                         onChange={handleChange}
                     />
+                    {error.life_spanMax && (<p className='danger'>{error.life_spanMax}</p>)}
                     {/* TEMPERAMENTOS DEL PERRO */}
                     <select onChange={(e) => handleSelect(e)}>
                         {temperamen && temperamen.length > 0 && temperamen.map((temp, index) => (
@@ -206,17 +213,22 @@ export default function Create() {
                         ))}
                     </select>
                     {/* Muestro los temperamentos seleccionados */}
-                    {input.temperament.length > 0 && (
-                        <ol>
-                            {input.temperament.map((el, index) => (
-                                <li key={index}>
-                                    {el}
-                                    <button type="button" onClick={() => handleDelete(index)}>Eliminar</button>
-                                    {index !== input.temperament.length - 1 && ", "}
-                                </li>
-                            ))}
-                        </ol>
-                    )}
+                    <div className='show-temp'>
+                        <label>Selected:</label>
+                        {input.temperament.length > 0 ? (
+                            <ol>
+                                {input.temperament.map((el, index) => (
+                                    <li key={index}>
+                                        {el}
+                                        <button type="button" onClick={() => handleDelete(index)}>Eliminar</button>
+                                        {index !== input.temperament.length - 1 && ", "}
+                                    </li>
+                                ))}
+                            </ol>
+                        ) : (
+                            <p>Please select at least one temperament</p>
+                        )}
+                    </div>
 
                 </div>
             </form>

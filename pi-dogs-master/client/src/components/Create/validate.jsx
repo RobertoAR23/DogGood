@@ -22,12 +22,17 @@ export default function validate(input) {
     }
 
     if (!input.life_spanMin) {
-        error.life_spanMin = 'life_spanMin is required'
+        error.life_spanMin = 'lifespan Min is required'
     }
 
     if (!input.life_spanMax) {
-        error.life_spanMax = 'life_spanMax is required'
+        error.life_spanMax = 'lifespan Max is required'
     }
+
+    if (input.temperament.length === 0) {
+        error.temperament = 'Please select at least one temperament';
+      }
+      
 
     return error
 }
