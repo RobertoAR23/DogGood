@@ -39,11 +39,11 @@ export default function Home() {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-// ====================================mostrar todos los perros====================================
+    // ====================================mostrar todos los perros====================================
     function handleShowAllDogs() {
         dispatch(getAllDogs()) // llama a la acción para obtener todos los perros
         setCurrentPage(1) // establece la página actual en 1 para volver a la primera página
-      }
+    }
 
     // -------------------------------------ordenamiento alfabetico----------------------------------
 
@@ -69,36 +69,32 @@ export default function Home() {
         dispatch(filterTemperament(e.target.value)); // llamo a la action que me interesa
         setCurrentPage(1);
         setOrder(e.target.value); // cambio el orden de los perritos
-      }
-      
-      function handleFilterByCreated(e) {
+    }
+
+    function handleFilterByCreated(e) {
         e.preventDefault();
         console.log("Filtrando por creación:", e.target.value);
         dispatch(filterCreated(e.target.value));
         setCurrentPage(1);
         setOrder(e.target.value);
-      }
-      
+    }
+
 
     return (
         <div className="Home">
             <div>
-                <div className="welcome">
-                    <h1>Find your Dog!</h1>
-                </div>
-            <div className="button-container">
                 <Link to="/">
                     <button id="top">Back</button>
                 </Link>
-                <Link to="/Create">
-                    <button id="top">Create</button>
-                </Link>
-            </div>
-            {/* ----------------------FILTROS------------------- */}
-            <div className="filter">
-            <SearchBar currentPage={currentPage} setCurrentPage={setCurrentPage} /> {/* pasa la página actual y la función para actualizarla */}            </div>
-            <button id="top" onClick={handleShowAllDogs}>Show all dogs</button> {/* botón para mostrar todos los perros */}
+                <div className="welcome">
+                    <h1>Find your Dog!</h1>
+                </div>
+                {/* ----------------------FILTROS------------------- */}
+                <div className="filter">
+                    <SearchBar currentPage={currentPage} setCurrentPage={setCurrentPage} /> {/* pasa la página actual y la función para actualizarla */}            </div>
+                <button id="c" onClick={handleShowAllDogs}>Show all dogs</button> {/* botón para mostrar todos los perros */}
                 {/* ----------------------Orden Alfabetico --------------------*/}
+
                 <select onChange={(e) => handleSort(e)} defaultValue="ALP">
                     <option value="ALP" disabled>Alphabetical order</option>
                     <option value="asc">A-Z</option>
@@ -128,6 +124,9 @@ export default function Home() {
                     <option value="min">Weight Min</option>
                     <option value="max">Weight Max</option>
                 </select>
+                <Link to="/Create">
+                    <button id="c">Create</button>
+                </Link>
             </div>
             {/* ----------------------PAGINADO------------------- */}
             <Pagination

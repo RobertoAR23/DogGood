@@ -1,0 +1,74 @@
+.detail {
+    background-image: url('../../utils/home\ 3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button-container {
+    margin-bottom: 20px;
+}
+
+#back-btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 25px;
+
+}
+
+.dog-info {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 100px;
+    /* Alineación vertical al inicio */
+}
+
+.dog-image {
+    width: 600px;
+    height: auto;
+    margin-right: 10px;
+    /* Espacio entre la imagen y el texto */
+}
+
+
+.dog-image {
+    width: 600px;
+    height: auto;
+    margin-bottom: 10px;
+    border: 15px solid #0a84e29d; /* Color rojo (#ff0000) para el borde */
+
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+li#Details {
+    margin-bottom: 80px;
+    color: rgb(0, 0, 0);
+    font-size: 25px;
+    background-color: #0ad0e230;
+    padding: 10px;
+    border-radius: 4px;
+    width: 800px;
+    text-align: center;
+    border: 2px solid #fffbfb; /* Color rojo (#ff0000) para el borde */
+  }
+  
+
+
+img[alt="loading"] {
+    width: 500px;
+    height: 500px;
+}
